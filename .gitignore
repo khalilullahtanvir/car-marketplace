@@ -1,0 +1,37 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+.next/
+out/
+dist/
+coverage/
+
+# Environment files
+.env
+.env.local
+.env.development
+.env.production
+
+# Generated and working artifacts
+outputs/
+work/
+
+# Codex and agent state
+.codex/
+.agents/
+
+# Editor and IDE settings
+.vscode/
+.idea/
+
+# Logs and caches
+*.log
+*.tsbuildinfo
+
+# OS metadata
+Thumbs.db
+.DS_Store
+
+# Supabase local state
+.supabase/
