@@ -3,7 +3,6 @@
 import { revalidatePath } from "next/cache";
 import { headers } from "next/headers";
 import { loginSchema, passwordResetSchema, signupSchema, updatePasswordSchema, authProviderSchema } from "../schemas/auth-schemas";
-import { normalizeAuthError } from "../utils/auth-error";
 import { sanitizeRedirectPath } from "../utils/redirect";
 import { sendPasswordReset, signInWithEmail, signInWithOAuth, signOut, signUpWithEmail, updatePassword, resendVerificationEmail } from "../services/auth-service";
 import type { AuthErrorShape, OAuthProvider } from "../types";
