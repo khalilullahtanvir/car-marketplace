@@ -1,10 +1,8 @@
 import { createServerClient } from "@supabase/ssr";
-import { cookies } from "next/headers";
+import type { NextRequest, NextResponse } from "next/server";
 import { env } from "@/lib/config/env";
 
-export async function createSupabaseServerClient() {
-  const cookieStore = await cookies();
-
+export function createSupabaseMiddlewareClient(request: NextRequest, response: NextResponse) {
   return createServerClient(env.NEXT_PUBLIC_SUPABASE_URL, env.NEXT_PUBLIC_SUPABASE_ANON_KEY, {
     auth: {
       autoRefreshToken: false,
@@ -14,21 +12,14 @@ export async function createSupabaseServerClient() {
     },
     cookies: {
       get(name: string) {
-        return cookieStore.get(name)?.value;
+        return request.cookies.get(name)?.value;
       },
       set(name: string, value: string, options: { path?: string; maxAge?: number; httpOnly?: boolean; sameSite?: "lax" | "strict" | "none"; secure?: boolean }) {
-        cookieStore.set({ name, value, ...options });
+        response.cookies.set({ name, value, ...options });
       },
       remove(name: string, options: { path?: string; maxAge?: number; httpOnly?: boolean; sameSite?: "lax" | "strict" | "none"; secure?: boolean }) {
-        cookieStore.set({ name, value: "", ...options, maxAge: 0 });
+        response.cookies.set({ name, value: "", ...options, maxAge: 0 });
       }
-    },
-    cookieOptions: {
-      name: "sb-auth",
-      domain: undefined,
-      path: "/",
-      sameSite: "lax",
-      secure: process.env.NODE_ENV === "production"
     }
   });
 }
